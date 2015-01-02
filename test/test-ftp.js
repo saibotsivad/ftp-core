@@ -45,6 +45,21 @@ test('extending the server', function(t) {
 		t.end()
 	})
 
+	t.test('Calling extend without an object should throw an error', function(t) {
+		function callExtend(arg) {
+			t.throws(function() {
+				new Ftp().extend()
+			})
+		}
+
+		callExtend()
+		callExtend('')
+		callExtend(13)
+		callExtend(null)
+
+		t.end()
+	})
+
 	t.end()
 })
 

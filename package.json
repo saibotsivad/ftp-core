@@ -1,8 +1,8 @@
 {
-  "name": "ftp-untitled",
+  "name": "ftp-core",
   "version": "0.0.0",
   "description": "something like the levelup core",
-  "main": "index.js",
+  "main": "ftp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

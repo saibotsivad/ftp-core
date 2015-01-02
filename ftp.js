@@ -25,11 +25,12 @@ function extend(ftp, extension) {
 		throw new Error('extension must be defined')
 	}
 
-	console.log(ftp, extension)
 	var newFtp = {
 		commands: extendObject(Object.create(ftp.commands), extension.commands || {}),
-		core: extendObject(Object.create(ftp.core), extension.core || {}),
-		extend: ftp.extend.bind(null, newFtp)
+		core: extendObject(Object.create(ftp.core), extension.core || {})
 	}
+
+	newFtp.extend = extend.bind(null, newFtp)
+
 	return newFtp
 }

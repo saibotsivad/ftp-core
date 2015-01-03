@@ -29,15 +29,18 @@ function extend(ftp, extension) {
 		throw new Error('extension must be defined')
 	}
 
-	var newFtp = {
+	var internalApi = {
 		commands: extendObject(Object.create(ftp.commands), extension.commands),
 		core: extendObject(Object.create(ftp.core), extension.core)
 	}
 
-	newFtp.extend = extend.bind(null, newFtp)
-	newFtp.callCommand = Promise.nodeify(callCommand.bind(null, newFtp))
+	var publicApi = {
+		extend: extend.bind(null, internalApi),
+		callCommand: Promise.nodeify(callCommand.bind(null, internalApi)),
+		core: internalApi.core
+	}
 
-	return newFtp
+	return publicApi
 }
 
 function callCommand(ftp, cmd, str) {

@@ -1,17 +1,20 @@
 {
   "name": "ftp-core",
   "version": "0.0.0",
-  "description": "A minimal, hopefully unopinionated implementation of FTP in JavaScript.",
-  "main": "index.js",
+  "description": "something like the levelup core",
+  "main": "ftp.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape test/*.js"
   },
   "keywords": [
-    "ftp",
-    "simple",
-    "core",
-    "sdmp"
+    "ftp"
   ],
   "author": "saibotsivad",
-  "license": "VOL"
+  "license": "VOL",
+  "devDependencies": {
+    "tape": "^3.0.3"
+  },
+  "dependencies": {
+    "extend": "^2.0.0"
+  }
 }

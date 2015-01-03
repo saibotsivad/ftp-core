@@ -2,13 +2,14 @@ module.exports = function FtpExtendUser() {
 	var userName
 	return {
 		commands: {
-			USER: function(ftpCore, user) {
+			USER: function(core, user) {
 				process.nextTick(function() {
 					if (user === 'anonymous') {
 						userName = user
-						ftpCore.sendControlResponse(230, [ 'Logged in as "' + userName + '".' ])
+						core.sendControlResponse(230, [ 'Logged in as "' + userName + '".' ])
 					} else {
-						ftpCore.sendControlResponse(530, [ 'Anonymous login requires the user name "anonymous".' ])
+						userName = undefined
+						core.sendControlResponse(530, [ 'Anonymous login requires the user name "anonymous".' ])
 					}
 				})
 			}

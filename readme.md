@@ -2,125 +2,143 @@
 
 A minimal, hopefully unopinionated implementation of FTP in JavaScript.
 
-### This is a work-in-progress.
+## This is a work-in-progress.
 
-Ideally, this will provide *only* the minimum framework to have a
-functional FTP server, and if you wanted to implement another common
-FTP extension it'd be really easy.
+The goal is to provide the most minimum (but complete) framework needed
+to have a functional FTP object.
 
-Not sure what sort of hooks are required, at the moment.
+Commands like `USER` and `CWD` are part of the "core" FTP specs (i.e., 
+see [RFC 959](https://tools.ietf.org/html/rfc959)), but even they are
+not implemented in the core.
 
-The goal is to not use a FS for the backend, but to wire it up
-so you pass in a levelup object.
+Each FTP command--also called an "extension"--is a distinct npm module,
+and you call the different modules to extend this core module, e.g.
+something like this:
 
-Then, there'd be an FS-based levelup db, so you can use that if
-you want a normal FTP server off the filesystem.
+	var Ftp = require('ftp-core')
+	var FtpUser = require('ftp-extension-user')
+	var Socket = require('ftp-normal-sockets')
 
-If you check out the server-behaviour, you'll see it's a thin wrapper
-on an emitter to take a "commands" object.
+	var myFtp = new Ftp()
+		.extend(FtpUser())
+		.extend(Socket({ listen: 21 }))
 
-Currently that "commands" object is like this:
+## The goal
 
-	{
-		COMMAND: function(args, callback) {}
-	}
+The goal with this core, and with the main extensions developed to
+make it useful, is this:
 
-Now the `args` is what you'd get from the client, so for example
-if the FTP server got this command
+1. Keep it simple enough (or "well abstracted", possibly) so that a
+	developer can read through each module to see what the FTP RFC
+	actually requires, programmatically.
+2. Don't require an FS for the backend. (Should be able to easily use
+	something like [levelup](https://www.npmjs.com/package/levelup) or
+	even a browser's local storage.)
+3. Implementing existing or new FTP extensions should be easy and
+	sensible. Adding an extension should be as easy as making a
+	new levelup extension, or even easier.
+4. Don't require OS/node socket literals. (Should be able to create a
+	thin wrapper for the socket implementation that uses the OS/node
+	sockets, or one that uses WebSockets, or anything else.)
 
-	USER anonymous
+## Road map thingy
 
-This would call the "commands" object `USER` function, and `args`
-would simply be `anonymous`.
+* Get the core written and tested. Mostly done, thanks to @TehShrike
+* Get a primary group of extensions created and thoroughly tested, so
+	that we can see what parts of the internal API are missing.
+* The goal of these primary extensions is whatever is needed to create
+	a functional anonymous FTP server. User authentication is not a
+	primary extension.
+* For each of the primary extensions, create them as npm modules, and
+	make two kinds of tests:
+	1. tests that are generic, and re-usable in any other module, to
+		see if the extension is RFC compliant
+	2. tests that functionally validate the actual extension
 
-It's up to each command function to parse and interpret the argument
-string.
+According to [RFC 5797](https://tools.ietf.org/html/rfc5797#page-4) (which
+I understand to have superseded RFC 959) the "base FTP commands" are:
 
-At the end of doing anything, the callback is given a number of arguments
-like this:
+* Mandatory:
+	- ABOR
+	- ACCT
+	- ALLO
+	- APPE
+	- CWD
+	- DELE
+	- HELP
+	- LIST
+	- MODE
+	- NLST
+	- NOOP
+	- PASS
+	- PASV
+	- PORT
+	- QUIT
+	- REIN
+	- REST
+	- RETR
+	- RNFR
+	- RNTO
+	- SITE
+	- STAT
+	- STOR
+	- STRU
+	- TYPE
+	- USER
+* Optional:
+	- CDUP
+	- MKD
+	- PWD
+	- RMD
+	- SMNT
+	- STOU
+	- SYST
 
-	callback(230)
+However, the primary extensions are, as I see them:
 
-or
+* USER
+* FEAT
+* CWD
+* PWD
+* LIST / MLSD / MLST (are these all the same?)
+* PASV / EPSV / LPSV / LPRT / PORT (lots of shared code here, I think)
+* NOOP
+* QUIT
+* RETR
+* REST
+* SIZE
+* STAT
+* TYPE
 
-	callback(230 'welcome to my server')
+As soon as all that is done, the next goal would be getting AUTH working.
 
-or even
+Getting AUTH TLS / AUTH SSH working *and tested* is going to be rather
+tricky, I feel, but hopefully it can be abstracted away enough to be
+easy-ish...
 
-	callback(230, 'first line of message', 'second line of message')
+It would probably also be good to make a very simple USER/PASS extension
+that uses levelup for the user database? I don't personally have a use for
+it, but I imagine others might find it useful.
 
-And this is interpreted into the appropriate string to be given
-back to the client, formatted according to the FTP specs.
+## Get involved?
 
-## get involved?
+you could make issues, if you think of something that is missing
 
-you could make issues, if you think of something
+or you could contribute code, if you've got some free time
 
-or you could try contributing code, if you've got some free time
-
-I'm pretty easy to work with.
-
-## FTP commands (from wikipedia)
-
-* `ABOR`: Abort an active file transfer.
-* `ACCT`: Account information.
-* `ADAT`: Authentication/Security Data
-* `ALLO`: Allocate sufficient disk space to receive a file.
-* `APPE`: Append.
-* `AUTH`: Authentication/Security Mechanism
-* `CCC`: Clear Command Channel.
-* `CDUP`: Change to Parent Directory.
-* `CONF`: Confidentiality Protection Command
-* `CWD`: Change working directory.
-* `DELE`: Delete file.
-* `ENC`: Privacy Protected Channel
-* `EPRT`: Specifies an extended address and port to which the server should connect.
-* `EPSV`: Enter extended passive mode.
-* `FEAT`: Get the feature list implemented by the server.
-* `HELP`: Returns usage documentation on a command if specified, else a general help document is returned.
-* `LANG`: Language Negotiation
-* `LIST`: Returns information of a file or directory if specified, else information of the current working directory is returned. If the server supports the '-R' command (e.g. 'LIST -R') then a recursive directory listing will be returned.
-* `LPRT`: Specifies a long address and port to which the server should connect.
-* `LPSV`: Enter long passive mode.
-* `MDTM`: Return the last-modified time of a specified file.
-* `MIC`: Integrity Protected Command
-* `MKD`: Make directory.
-* `MLSD`: Lists the contents of a directory if a directory is named.
-* `MLST`: Provides data about exactly the object named on its command line and no others.
-* `MODE`: Sets the transfer mode (Stream, Block, or Compressed).
-* `NLST`: Returns a list of file names in a specified directory.
-* `NOOP`: No operation (dummy packet; used mostly as keepalives).
-* `OPTS`: Select options for a feature.
-* `PASS`: Authentication password.
-* `PASV`: Enter passive mode.
-* `PBSZ`: Protection Buffer Size
-* `PORT`: Specifies an address and port to which the server should connect.
-* `PROT`: Data Channel Protection Level
-* `PWD`: Print working directory. Returns the current directory of the host.
-* `QUIT`: Disconnect.
-* `REIN`: Re-initialize the connection.
-* `REST`: Restart transfer from the specified point.
-* `RETR`: Retrieve a copy of the file.
-* `RMD`: Remove a directory.
-* `RNFR`: Rename from.
-* `RNTO`: Rename to.
-* `SITE`: Sends site specific commands to remote server.
-* `SIZE`: Return the size of a file.
-* `SMNT`: Mount file structure.
-* `STAT`: Returns the current status.
-* `STOR`: Accept data and store data as a file at the server site.
-* `STOU`: Store file uniquely.
-* `STRU`: Set file transfer structure.
-* `SYST`: Return system type.
-* `TYPE`: Sets the transfer mode (ASCII/binary).
-* `USER`: Authentication username.
-* `XCUP`: Change to the parent of the current working directory.
-* `XMKD`: Make directory.
-* `XPWD`: Print current working directory.
-* `XRCP`: XRMD: Remove directory.
-* `XRSQ`: XSEM: Send, mail if cannot.
-* `XSEN`: Send to terminal.
+I'm pretty easy to work with, and I like community!
 
 ## License
 
-Released under the [VOL](http://veryopenlicense.com).
+Everything in this repository, and all contributions to is are released
+under the [VOL](http://veryopenlicense.com).
+
+	Very Open License (VOL)
+
+	The contributor(s) to this creative work voluntarily grant permission
+	to any individual(s) or entities of any kind
+	- to use the creative work in any manner,
+	- to modify the creative work without restriction,
+	- to sell the creative work or derivatives thereof for profit, and
+	- to release modifications of the creative work in part or whole under any license
+	with no requirement for compensation or recognition of any kind.

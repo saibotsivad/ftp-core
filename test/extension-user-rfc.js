@@ -15,36 +15,28 @@ test('USER command response is valid', function(t) {
 
 	rfcValidUserNames.forEach(function(userName) {
 		t.test('Testing for valid USER response with user ' + userName, function(t) {
-			var testFTP = new FTP().extend(FtpUser()).extend({
-				core: {
-					sendControlResponse: function(number, lines) {
-						t.equals(typeof number, 'number', 'first value must be a number')
-						t.ok(Array.isArray(lines), 'second value must be an array')
-						// although, an empty array is valid
-						t.ok(lines.every(function(line) { return typeof line === 'string'}), 'every line must be a string')
-						t.ok(number === 230 || number === 530, 'RFC 959 expects one of these server response codes')
+			var testFTP = new FTP().extend(FtpUser())
 
-						console.log('current user is', userName)
+			testFTP.callCommand('USER', userName).then(function(output) {
+				var parsed = /^(\d+) (.+)/.exec(output)
+				t.ok(parsed)
+				var number = parseInt(parsed[1], 10)
+				var string = parsed[2]
+				t.ok(number === 230 || number === 530, 'RFC 959 expects one of these server response codes')
 
-						if (number === 230) {
-							t.ok(testFTP.core.isAuthenticated(), '230 response means they should be authenticated')
-							t.equals(testFTP.core.getUserName(), userName, 'the authenticated user name should exactly match')
+				if (number === 230) {
+					t.ok(testFTP.core.isAuthenticated(), '230 response means they should be authenticated')
+					t.equals(testFTP.core.getUserName(), userName, 'the authenticated user name should exactly match')
+					var regex = /\s"[^"]+"/g // RFC 959 expects user names to be double quotes
 
-							var regex = /\s"[^"]+"/g // RFC 959 expects user names to be double quotes
-							var string = lines.join('\n') // user names may not be split across newlines
-							console.log(string)
-							t.ok(regex.test(string), 'RFC 959 expects one user name')
-							t.notOk(regex.test(string), 'RFC 959 expects *only* one user name')
-						} else {
-							t.notOk(testFTP.core.isAuthenticated(), '530 response means they should not be authenticated')
-						}
-
-						t.end()
-					}
+					t.ok(regex.test(string), 'RFC 959 expects one user name')
+					t.notOk(regex.test(string), 'RFC 959 expects *only* one user name')
+				} else {
+					t.notOk(testFTP.core.isAuthenticated(), '530 response means they should not be authenticated')
 				}
-			})
 
-			testFTP.commands.USER(testFTP.core, userName)
+				t.end()
+			})
 		})
 	})
 

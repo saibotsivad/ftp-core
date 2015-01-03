@@ -101,7 +101,7 @@ However, the primary extensions are, as I see them:
 * CWD
 * PWD
 * LIST / MLSD / MLST (are these all the same?)
-* PASV / EPSV / LPSV / LPRT / PORT (lots of shared code here, I think)
+* PASV / EPSV / PORT (LPSV and LPRT are obsolete, according to RFC 5797)
 * NOOP
 * QUIT
 * RETR
@@ -127,6 +127,16 @@ you could make issues, if you think of something that is missing
 or you could contribute code, if you've got some free time
 
 I'm pretty easy to work with, and I like community!
+
+## Developer notes
+
+It is up to the developer to generate valid FTP strings as responses inside
+extensions. If you are doing normal string responses, you can use something like
+[ftp-generate-response](https://github.com/sdmp/ftp-generate-response) to make
+RFC compliant responses.
+
+Internally, we may make use of something like [ftp-validate-response](https://github.com/sdmp/ftp-validate-response)
+to verify that all response strings are RFC compliant. This isn't being done now, but it might be added in the future?
 
 ## License
 

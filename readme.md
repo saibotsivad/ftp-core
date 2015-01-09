@@ -43,7 +43,6 @@ make it useful, is this:
 
 ## Road map thingy
 
-* Get the core written and tested. Mostly done, thanks to @TehShrike
 * Get a primary group of extensions created and thoroughly tested, so
 	that we can see what parts of the internal API are missing.
 * The goal of these primary extensions is whatever is needed to create

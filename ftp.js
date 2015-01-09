@@ -5,11 +5,13 @@ var stubCoreApi = {
 	getUserName: function getUserName() { return undefined },
 	isAuthenticated: function isAuthenticated() { return undefined },
 	currentDirectory: function currentDirectory() { return undefined },
-	sendControlResponse: function sendControlResponse() { throw Error('The command "sendControlResponse" is not implemented!') },
-	getDataStream: function getDataStream() { throw Error('The command "getDataStream" is not implemented!') },
-	getAllCommandNames: function getAllCommands() {
-		return []
-	}
+	getAllCommandNames: function getAllCommands() { return undefined },
+	sendControlResponse: function sendControlResponse() {
+		throw Error('The command "sendControlResponse" is not implemented!')
+	},
+	getDataStream: function getDataStream() {
+		throw Error('The command "getDataStream" is not implemented!')
+	},
 }
 
 module.exports = function FtpCore() {

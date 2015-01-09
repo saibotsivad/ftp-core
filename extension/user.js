@@ -5,10 +5,10 @@ module.exports = function FtpExtendUser() {
 			USER: function(core, user, cb) {
 				if (user === 'anonymous') {
 					userName = user
-					cb(null, '230 Logged in as "' + userName + '".')
+					cb(null, '230 Logged in as "' + userName + '".\r\n')
 				} else {
 					userName = undefined
-					cb(null, '530 Anonymous login requires the user name "anonymous".')
+					cb(null, '530 Anonymous login requires the user name "anonymous".\r\n')
 				}
 			}
 		},

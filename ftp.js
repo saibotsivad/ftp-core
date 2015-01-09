@@ -25,8 +25,8 @@ module.exports = function FtpCore() {
 }
 
 function extend(ftp, extension) {
-	if (!extension) {
-		throw new Error('extension must be defined')
+	if (!extension || typeof extension !== 'object') {
+		throw new Error('extension must be a defined object')
 	}
 
 	var internalApi = {

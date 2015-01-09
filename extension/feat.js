@@ -4,7 +4,7 @@ var extensionsNotListed = [
 	// Check RFC 959 for this list
 ]
 
-module.exports = function FtpExtendFet(feat) {
+module.exports = function FtpExtendFeat() {
 	return {
 		commands: {
 			FEAT: function(ftpCore) {

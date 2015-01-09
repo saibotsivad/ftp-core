@@ -12,7 +12,9 @@
   "author": "saibotsivad",
   "license": "VOL",
   "devDependencies": {
-    "tape": "^3.0.3"
+    "ftp-validate-response": "^0.0.4",
+    "tape": "~3.0.3",
+    "extend": "~2.0.0"
   },
   "dependencies": {
     "extend": "^2.0.0",

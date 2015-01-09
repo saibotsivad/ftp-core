@@ -1,5 +1,7 @@
 # ftp-core [![Build Status](https://travis-ci.org/sdmp/ftp-core.svg?branch=master)](https://travis-ci.org/sdmp/ftp-core)
 
+[![NPM](https://nodei.co/npm/ftp-core.png)](https://nodei.co/npm/ftp-core/)
+
 A minimal, hopefully unopinionated implementation of FTP in JavaScript.
 
 ## This is a work-in-progress.

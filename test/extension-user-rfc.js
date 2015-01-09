@@ -1,4 +1,5 @@
 var test = require('tape')
+var validator = require('ftp-validate-response')
 var FTP = require('../')
 var FtpUser = require('../extension/user')
 
@@ -23,6 +24,8 @@ test('USER command response is valid', function(t) {
 			var testFTP = new FTP().extend(FtpUser())
 
 			testFTP.callCommand('USER', userName).then(function(output) {
+				t.ok(validator(output), 'response should be valid')
+
 				var parsed = /^(\d{3}) (.+)\r\n/.exec(output)
 				t.ok(parsed, 'the response code is three digits followed by a space, ending with <CRLF>')
 

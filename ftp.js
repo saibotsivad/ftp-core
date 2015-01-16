@@ -1,6 +1,5 @@
 var Promise = require('promise')
 var extendObject = require('extend')
-var denodeify = require('./improved-denodeify')
 
 var stubCoreApi = {
 	getUserName: function getUserName() { return undefined },
@@ -49,7 +48,7 @@ function callCommand(ftp, cmd, str) {
 			throw new Error('No such command "' + cmd + '"')
 		}
 
-		var commandFunction = denodeify(ftp.commands[cmd])
+		var commandFunction = Promise.denodeify(ftp.commands[cmd])
 
 		resolve(commandFunction(ftp.core, str))
 	})

@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "extend": "^2.0.0",
-    "promise": "^6.0.1"
+    "promise": "^6.1.0"
   }
 }

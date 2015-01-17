@@ -1,7 +1,11 @@
 {
   "name": "ftp-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "something like the levelup core",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sdmp/ftp-core.git"
+  },
   "main": "ftp.js",
   "scripts": {
     "test": "tape test/*.js"

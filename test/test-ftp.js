@@ -67,6 +67,20 @@ test('extending the server', function(t) {
 		t.end()
 	})
 
+	t.test('Calling an unimplemented command should throw an error', function(t) {
+		t.plan(2)
+
+		var ftp = new Ftp()
+		ftp.callCommand('BUTTS', 'does not exist').catch(function() {
+			t.pass('promise rejected')
+		})
+
+		var ftp = new Ftp()
+		ftp.callCommand('BUTTS', 'does not exist', function(err) {
+			t.ok(err, 'error should exist')
+		})
+	})
+
 	t.test('Calling a command with a callback', function(t) {
 		t.plan(2)
 		var ftp = new Ftp().extend({
@@ -99,12 +113,6 @@ test('extending the server', function(t) {
 			t.end()
 		})
 	})
-
-	t.end()
-})
-
-test('calling default core API', function(t) {
-	// butts?
 
 	t.end()
 })

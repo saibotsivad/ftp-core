@@ -1,6 +1,6 @@
 {
   "name": "ftp-core",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "something like the levelup core",
   "main": "ftp.js",
   "scripts": {
@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "extend": "^2.0.0",
-    "promise": "^6.1.0"
+    "promise": "^6.1.0",
+    "ftp-generate-response": "0.0.3"
   }
 }

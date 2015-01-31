@@ -1,6 +1,6 @@
 {
   "name": "ftp-core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "something like the levelup core",
   "repository": {
     "type": "git",

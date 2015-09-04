@@ -1,4 +1,4 @@
-# ftp-core [![Build Status](https://travis-ci.org/sdmp/ftp-core.svg?branch=master)](https://travis-ci.org/sdmp/ftp-core)
+# ftp-core [![Build Status](https://travis-ci.org/tobiaslabs/ftp-core.svg?branch=master)](https://travis-ci.org/tobiaslabs/ftp-core)
 
 [![NPM](https://nodei.co/npm/ftp-core.png)](https://nodei.co/npm/ftp-core/)
 
@@ -133,10 +133,10 @@ I'm pretty easy to work with, and I like community!
 
 It is up to the developer to generate valid FTP strings as responses inside
 extensions. If you are doing normal string responses, you can use something like
-[ftp-generate-response](https://github.com/sdmp/ftp-generate-response) to make
+[ftp-generate-response](https://github.com/tobiaslabs/ftp-generate-response) to make
 RFC compliant responses.
 
-Internally, we may make use of something like [ftp-validate-response](https://github.com/sdmp/ftp-validate-response)
+Internally, we may make use of something like [ftp-validate-response](https://github.com/tobiaslabs/ftp-validate-response)
 to verify that all response strings are RFC compliant. This isn't being done now, but it might be added in the future?
 
 ## License

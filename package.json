@@ -1,10 +1,10 @@
 {
   "name": "ftp-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "something like the levelup core",
   "repository": {
     "type": "git",
-    "url": "git@github.com:sdmp/ftp-core.git"
+    "url": "git@github.com:tobiaslabs/ftp-core.git"
   },
   "main": "ftp.js",
   "scripts": {
@@ -16,13 +16,13 @@
   "author": "saibotsivad",
   "license": "VOL",
   "devDependencies": {
-    "ftp-validate-response": "^0.0.4",
+    "ftp-validate-response": "^0.0.5",
     "tape": "~3.0.3",
     "extend": "~2.0.0"
   },
   "dependencies": {
     "extend": "^2.0.0",
     "promise": "^6.1.0",
-    "ftp-generate-response": "0.0.3"
+    "ftp-generate-response": "^0.0.4"
   }
 }

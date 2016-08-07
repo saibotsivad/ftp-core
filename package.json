@@ -4,7 +4,7 @@
   "description": "something like the levelup core",
   "repository": {
     "type": "git",
-    "url": "git@github.com:tobiaslabs/ftp-core.git"
+    "url": "git@github.com:saibotsivad/ftp-core.git"
   },
   "main": "ftp.js",
   "scripts": {

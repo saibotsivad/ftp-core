@@ -1,7 +1,5 @@
 # ftp-core [![Build Status](https://travis-ci.org/tobiaslabs/ftp-core.svg?branch=master)](https://travis-ci.org/tobiaslabs/ftp-core)
 
-[![NPM](https://nodei.co/npm/ftp-core.png)](https://nodei.co/npm/ftp-core/)
-
 A minimal, hopefully unopinionated implementation of FTP in JavaScript.
 
 ## This is a work-in-progress.
@@ -141,15 +139,4 @@ to verify that all response strings are RFC compliant. This isn't being done now
 
 ## License
 
-Everything in this repository, and all contributions to is are released
-under the [VOL](http://veryopenlicense.com).
-
-	Very Open License (VOL)
-
-	The contributor(s) to this creative work voluntarily grant permission
-	to any individual(s) or entities of any kind
-	- to use the creative work in any manner,
-	- to modify the creative work without restriction,
-	- to sell the creative work or derivatives thereof for profit, and
-	- to release modifications of the creative work in part or whole under any license
-	with no requirement for compensation or recognition of any kind.
+[VOL](http://veryopenlicense.com)

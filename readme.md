@@ -1,5 +1,7 @@
 # ftp-core [![Build Status](https://travis-ci.org/tobiaslabs/ftp-core.svg?branch=master)](https://travis-ci.org/tobiaslabs/ftp-core)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/saibotsivad/ftp-core.svg)](https://greenkeeper.io/)
+
 A minimal, hopefully unopinionated implementation of FTP in JavaScript.
 
 ## This is a work-in-progress.
